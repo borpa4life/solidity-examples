@@ -8,7 +8,7 @@ contract Borpa is OFT {
     // Operator is only allowed to modify tax rates
     address private _operator;
 
-    constructor(address _layerZeroEndpoint) OFT("Borpa", "Borpa", _layerZeroEndpoint) {
+    constructor(address _layerZeroEndpoint) OFT("Borpa", "BORPA", _layerZeroEndpoint) {
         _mint(msg.sender, 100_000_000 * 1e18);
         _operator = msg.sender;
     }
