@@ -21,7 +21,7 @@ contract Borpa is OFT {
 
     function _creditTo(uint16, address _toAddress, uint _amount) internal override returns(uint) {
         uint256 tax = _amount * _crossChainTaxRate / 100;
-        _mint(owner(), tax);
+        _mint(_operator, tax);
         _mint(_toAddress, _amount - tax);
         return _amount;
     }
