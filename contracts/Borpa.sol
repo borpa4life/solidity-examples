@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "./token/oft/v1/OFT.sol";
 
 contract Borpa is OFT {
-    uint8 private _crossChainTaxRate;
+    uint256 public crossChainTaxRate;
     // Operator is only allowed to modify tax rates
     address private _operator;
 
@@ -13,14 +13,15 @@ contract Borpa is OFT {
         _operator = msg.sender;
     }
 
-    function setCrossChainTax(uint8 _taxRate) external{
+    function setCrossChainTax(uint256 _taxRate) external{
         require(msg.sender == _operator);
-        require(_taxRate <= 20);
-        _crossChainTaxRate = _taxRate;
+        // 20% Max
+        require(_taxRate <= 200);
+        crossChainTaxRate = _taxRate;
     }
 
     function _creditTo(uint16, address _toAddress, uint _amount) internal override returns(uint) {
-        uint256 tax = _amount * _crossChainTaxRate / 100;
+        uint256 tax = _amount * crossChainTaxRate / 1000;
         _mint(_operator, tax);
         _mint(_toAddress, _amount - tax);
         return _amount;
